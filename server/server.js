@@ -1,6 +1,25 @@
 /* Express App */
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+dotenv.config();
+
+const PORT = process.env.PORT;
+
+app.use(express.json());
+
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("Connected to Database");
+  })
+  .catch((err) => {
+    console.log("Error connecting to database: ", err);
+  });
 
 /** Cors policy */
 const cors = require("cors");
@@ -39,10 +58,6 @@ readdirSync("./routes").map((file) =>
   app.use("/", require("./routes/" + file))
 );
 
-app.get("/test", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.listen(8000, () => {
-  console.log("Facebook server listening on port 8000");
+app.listen(PORT, () => {
+  console.log(`Facebook server running on port ${PORT}`);
 });
