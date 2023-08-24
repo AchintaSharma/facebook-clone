@@ -32,7 +32,7 @@ function options(req, res) {
   let temp;
   let origin = req.header("Origin");
 
-  console.log("origin: ", origin);
+  // console.log("origin: ", origin);
   if (allowed.indexOf(origin) > -1) {
     temp = {
       origin: true,
